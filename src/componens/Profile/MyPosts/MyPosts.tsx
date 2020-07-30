@@ -3,9 +3,15 @@ import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {profilePageType} from "../../../redux/state";
 
+type MyPostType = {
+    profilePage:profilePageType
+    addPost: () => void
+    updatePostText: (newText: string) => void
+}
 
-function MyPosts(props: profilePageType) {
-    let postsElements = props.posts.map(props => <Post message={props.message} likesCount={props.likesCount}/>)
+
+function MyPosts(props: MyPostType) {
+    let postsElements = props.profilePage.posts.map(props => <Post message={props.message} likesCount={props.likesCount}/>)
 
     let refElement = React.createRef<HTMLTextAreaElement>();
 
@@ -27,7 +33,7 @@ function MyPosts(props: profilePageType) {
             <h3> my posts </h3>
             <div>
                 <div>
-                    <textarea onChange={onPostChange} ref={refElement} value={props.newPostText}/>
+                    <textarea onChange={onPostChange} ref={refElement} value={props.profilePage.newPostText}/>
                 </div>
                 <div>
                     <button onClick={addPost}>add post</button>
