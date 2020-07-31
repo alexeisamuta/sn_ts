@@ -24,13 +24,13 @@ const App: React.FC<PropsType> = (props) => {
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/dialogs' render={() => <Dialogs dialogs={state.dialogsPage.dialogs} messages={state.dialogsPage.messages}/>}/>
-                    <Route path='/profile' render={() => <Profile profilePage={state.profilePage} updatePostText={props.store.updatePostText.bind(props.store)} addPost={props.store.addPost.bind(props.store)}/> }/>
+                    <Route path='/dialogs' render={() => <Dialogs  dialogsPage={state.dialogsPage} dispatch={props.store.dispatch.bind(props.store)}/>}/>
+                    <Route path='/profile' render={() => <Profile profilePage={state.profilePage} dispatch={props.store.dispatch.bind(props.store)} /> }/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
+                </div>
                     <Route path='/settings' component={Settings}/>
                 </div>
-            </div>
         </BrowserRouter>
     );
 }
