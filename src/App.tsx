@@ -8,14 +8,15 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import Music from "./componens/Music/Music";
 import News from "./componens/News/News";
 import Settings from "./componens/Settings/Settings";
-import {StoreType} from "./redux/state"
+import {StoreType} from "./redux/store"
+import DialogsContainer from "./componens/Dialogs/DialogsContainer";
 
 export type PropsType = {
-    store: StoreType
+   // store: any
 }
 const App: React.FC<PropsType> = (props) => {
 
-    const state = props.store.getState();
+    /*const state = props.store.getState();*/
 
 
     return (
@@ -24,8 +25,8 @@ const App: React.FC<PropsType> = (props) => {
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/dialogs' render={() => <Dialogs  dialogsPage={state.dialogsPage} dispatch={props.store.dispatch.bind(props.store)}/>}/>
-                    <Route path='/profile' render={() => <Profile profilePage={state.profilePage} dispatch={props.store.dispatch.bind(props.store)} /> }/>
+                    <Route path='/dialogs' render={() => <DialogsContainer />}/>
+                    <Route path='/profile' render={() => <Profile /> }/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
                 </div>

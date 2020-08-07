@@ -112,11 +112,6 @@ export const store: StoreType = {
     }
 }
 
-/*export const addPostAC = () => ({type: ADD_POST} as const)
-export const updatePostTextAC = (text: string) => ({type: UPDATE_POST_TEXT, newText: text} as const)*/
-
-/*export const updateNewMessageBodyAC = (body: string) => ({type: UPDATE_NEW_MESSAGE_BODY, body: body} as const)
-export const sendMessageAC = () => ({type: SEND_MESSAGE} as const)*/
 
 
 
