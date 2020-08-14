@@ -12,7 +12,7 @@ import {StoreType} from "./redux/store"
 import DialogsContainer from "./componens/Dialogs/DialogsContainer";
 
 export type PropsType = {
-   // store: any
+    // store: any
 }
 const App: React.FC<PropsType> = (props) => {
 
@@ -25,13 +25,13 @@ const App: React.FC<PropsType> = (props) => {
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/dialogs' render={() => <DialogsContainer />}/>
-                    <Route path='/profile' render={() => <Profile /> }/>
+                    <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                    <Route path='/profile' render={() => <Profile/>}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
-                </div>
                     <Route path='/settings' component={Settings}/>
                 </div>
+            </div>
         </BrowserRouter>
     );
 }

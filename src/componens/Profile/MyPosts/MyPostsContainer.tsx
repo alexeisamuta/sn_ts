@@ -1,20 +1,12 @@
 import React from 'react';
-import {ActionsTypes, profilePageType} from "../../../redux/store";
 import {addPostAC, updatePostTextAC} from "../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
-import StoreContext from "../../../StoreContext";
+import {connect} from "react-redux";
 
 
-/*type MyPostType = {
-    profilePage:profilePageType
-    dispatch:(action: ActionsTypes) => void
-}*/
-
-type MyPostsContainerType = {
-}
 
 
-function MyPostsContainer(props: MyPostsContainerType) {
+/*function MyPostsContainer(props: MyPostsContainerType) {
 
 
     return (
@@ -38,6 +30,27 @@ function MyPostsContainer(props: MyPostsContainerType) {
             }}
         </StoreContext.Consumer>
     )
-};
+};*/
+
+let mapStateToProps = (state: any) => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText
+    }
+}
+
+let mapDispatchToProps = (dispatch: any) => {
+    return {
+        addPost: () => {
+            dispatch(addPostAC())
+        },
+        updatePostTextAC: (text: any) => {
+            dispatch(updatePostTextAC(text))
+        }
+
+    }
+}
+
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
 
 export default MyPostsContainer;
