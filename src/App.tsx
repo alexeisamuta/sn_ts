@@ -10,6 +10,8 @@ import News from "./componens/News/News";
 import Settings from "./componens/Settings/Settings";
 import {StoreType} from "./redux/store"
 import DialogsContainer from "./componens/Dialogs/DialogsContainer";
+import {Users} from "./componens/Users/Users";
+import UsersContainer from "./componens/Users/UsersContainer";
 
 export type PropsType = {
     // store: any
@@ -29,7 +31,9 @@ const App: React.FC<PropsType> = (props) => {
                     <Route path='/profile' render={() => <Profile/>}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
+                    <Route path='/users' render={() => <UsersContainer />}/>
                     <Route path='/settings' component={Settings}/>
+
                 </div>
             </div>
         </BrowserRouter>
