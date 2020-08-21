@@ -1,6 +1,7 @@
 import React from "react";
 import {ActionsTypes, profilePageType} from "./store";
 import {addPostAC} from "./profile-reducer";
+import {ItemResponseType} from "../componens/Users/Users";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -85,4 +86,4 @@ export const usersReducer = (state: stateUsersType = initialState, action: Actio
 
 export const followAC = (userID: number) => ({type: FOLLOW, userID} as const)
 export const unfollowAC = (userID: number) => ({type: UNFOLLOW, userID} as const)
-export const setUsersAC = (users: Array<usersType>) => ({type: SET_USERS, users} as const)
+export const setUsersAC = (users: ItemResponseType[]) => ({type: SET_USERS, users} as const)
