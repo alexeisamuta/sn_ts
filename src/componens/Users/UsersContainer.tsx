@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {ItemResponseType, Users} from "./UsersC";
+import {ItemResponseType, Users} from "./Users";
 import {followAC, setUsersAC, unfollowAC, usersType} from "../../redux/users-reducer";
 
 let mapStateToProps = (state: any) => {
