@@ -1,46 +1,38 @@
 import React from "react";
-import {stateUsersType, usersType} from "../../redux/users-reducer";
-import styles from './users.module.css'
-import * as axios from 'axios';
-import {AxiosResponse} from "axios";
-import userPhoto from "../../assets/images/icon-image.png"
+import styles from "./users.module.css";
+import userPhoto from "../../assets/images/icon-image.png";
+import {ItemResponseType} from "./UsersContainer";
 
-type userType = {
-    users: ItemResponseType[],
+
+type userTypeFunc = {
+    users: ItemResponseType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
     follow: (userID: number) => void
     unfollow: (userID: number) => void
-    setUsers: (users: ItemResponseType[]) => void
-}
-type responseType = {
-    items: ItemResponseType[]
-    totalCount: number
-    error: null
-}
-export type ItemResponseType = {
-    name: string
-    id: number
-    uniqueUrlName: null
-    photo: photosType
-    status: null
-    followed: boolean
-}
-type photosType = {
-    small: string
-    large: string
+    onPageChanged: (pageNumber: number) => void
 }
 
-export class Users extends React.Component<userType, Array<ItemResponseType>> {
+export const Users = (props: userTypeFunc) => {
 
-    componentDidMount() {
-        axios.default.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-            this.props.setUsers(response.data.items)
-        })
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+
+    let pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
     }
-
-    render() {
-        return <div> its class
-            {
-                this.props.users.map(u => <div key={u.id}>
+    return <div>
+        <div>
+            {pages.map(p => {
+                return <span className={props.currentPage === p ? styles.selectedPage : ""}
+                             onClick={() => {
+                                 props.onPageChanged(p)
+                             }}>{p}</span>
+            })}
+        </div>
+        {
+            props.users.map(u => <div key={u.id}>
             <span>
                 <div>
                     <img src={u.photo ? u.photo.small : userPhoto} className={styles.userPhoto}/>
@@ -48,15 +40,14 @@ export class Users extends React.Component<userType, Array<ItemResponseType>> {
                 <div>
                     {u.followed
                         ? <button onClick={() => {
-                            this.props.unfollow(u.id)
+                            props.unfollow(u.id)
                         }}>Unfollow</button>
                         : <button onClick={() => {
-                            this.props.follow(u.id)
+                            props.follow(u.id)
                         }}>Follow</button>}
-                    {/*<button>Follow</button>*/}
                 </div>
             </span>
-                    <span>
+                <span>
                 <span>
                     <div>{u.name}</div>
                     <div>{u.followed}</div>
@@ -66,9 +57,7 @@ export class Users extends React.Component<userType, Array<ItemResponseType>> {
                     <div>{u.id}</div>
                 </span>
             </span>
-                </div>)
-            }
-        </div>
-    }
-
+            </div>)
+        }
+    </div>
 }

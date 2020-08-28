@@ -3,14 +3,11 @@ import './App.css';
 import Header from "./componens/Header/Header";
 import Navbar from "./componens/Navbar/Navbar";
 import Profile from "./componens/Profile/Profile";
-import Dialogs from "./componens/Dialogs/Dialogs";
 import {BrowserRouter, Route} from 'react-router-dom'
 import Music from "./componens/Music/Music";
 import News from "./componens/News/News";
 import Settings from "./componens/Settings/Settings";
-import {StoreType} from "./redux/store"
 import DialogsContainer from "./componens/Dialogs/DialogsContainer";
-import {Users} from "./componens/Users/Users";
 import UsersContainer from "./componens/Users/UsersContainer";
 
 export type PropsType = {
