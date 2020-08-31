@@ -1,8 +1,19 @@
 import React from "react";
-import {ActionsTypes, postsType, profilePageType} from "./store";
+import {postsType, profilePageType} from "./store";
+import {UsersProfileType} from "../componens/Profile/ProfileContainer";
+import {sendMessageAC, updateNewMessageBodyAC} from "./dialogs-reducer";
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT'
+const SET_USER_PROFILE = 'SET_USER_PROFILE'
+
+
+type ActionsTypes = ReturnType<typeof addPostAC>
+    | ReturnType<typeof updatePostTextAC>
+    | ReturnType<typeof updateNewMessageBodyAC>
+    | ReturnType<typeof sendMessageAC>
+    | ReturnType<typeof setUsersProfile>
+
 
 let initialState = {
     posts: [
@@ -10,6 +21,7 @@ let initialState = {
         {message: "It's my first post", likesCount: 23},
     ],
     newPostText: "",
+    profile: null
 }
 
 export const profileReducer = (state: profilePageType = initialState, action: ActionsTypes) => {
@@ -28,10 +40,17 @@ export const profileReducer = (state: profilePageType = initialState, action: Ac
                 newPostText: action.newText
             }
         }
+
+        case SET_USER_PROFILE:
+            return {
+                ...state,
+                profile: action.profile}
+
         default:
             return state
     }
 }
 
 export const addPostAC = () => ({type: ADD_POST} as const)
+export const setUsersProfile = (profile: UsersProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 export const updatePostTextAC = (text: string) => ({type: UPDATE_POST_TEXT, newText: text} as const)

@@ -9,6 +9,7 @@ import News from "./componens/News/News";
 import Settings from "./componens/Settings/Settings";
 import DialogsContainer from "./componens/Dialogs/DialogsContainer";
 import UsersContainer from "./componens/Users/UsersContainer";
+import ProfileContainer from "./componens/Profile/ProfileContainer";
 
 export type PropsType = {
     // store: any
@@ -25,7 +26,7 @@ const App: React.FC<PropsType> = (props) => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-                    <Route path='/profile' render={() => <Profile/>}/>
+                    <Route path='/profile/:userId?' render={() => <ProfileContainer />}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
                     <Route path='/users' render={() => <UsersContainer />}/>

@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./users.module.css";
 import userPhoto from "../../assets/images/icon-image.png";
 import {ItemResponseType} from "./UsersContainer";
+import {NavLink} from "react-router-dom";
 
 
 type userTypeFunc = {
@@ -35,7 +36,9 @@ export const Users = (props: userTypeFunc) => {
             props.users.map(u => <div key={u.id}>
             <span>
                 <div>
+                    <NavLink to={'/profile/' + u.id}>
                     <img src={u.photo ? u.photo.small : userPhoto} className={styles.userPhoto}/>
+                    </NavLink>
                 </div>
                 <div>
                     {u.followed
