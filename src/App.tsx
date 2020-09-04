@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
-import Header from "./componens/Header/Header";
 import Navbar from "./componens/Navbar/Navbar";
-import Profile from "./componens/Profile/Profile";
 import {BrowserRouter, Route} from 'react-router-dom'
 import Music from "./componens/Music/Music";
 import News from "./componens/News/News";
@@ -10,6 +8,7 @@ import Settings from "./componens/Settings/Settings";
 import DialogsContainer from "./componens/Dialogs/DialogsContainer";
 import UsersContainer from "./componens/Users/UsersContainer";
 import ProfileContainer from "./componens/Profile/ProfileContainer";
+import HeaderContainer from "./componens/Header/HeaderContainer";
 
 export type PropsType = {
     // store: any
@@ -22,7 +21,7 @@ const App: React.FC<PropsType> = (props) => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
-                <Header/>
+                <HeaderContainer/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs' render={() => <DialogsContainer/>}/>
