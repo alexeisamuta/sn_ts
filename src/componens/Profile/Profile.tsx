@@ -7,7 +7,7 @@ import {UsersProfileType} from "./ProfileContainer";
 
 type ProfileContainerType = {
     profile: UsersProfileType
-    setUsersProfile: (profile: UsersProfileType) => void
+    //setUsersProfile: (profile: UsersProfileType) => void
 }
 
 type ProfileType = {

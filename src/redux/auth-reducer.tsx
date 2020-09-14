@@ -1,5 +1,5 @@
 import React from "react";
-import {ItemResponseType} from "../componens/Users/UsersContainer";
+import {authAPI} from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 
@@ -12,9 +12,9 @@ type AuthReducerPropsType = {
 }
 
 let initialState = {
-    id : null,
-    login : null,
-    email : null,
+    id: null,
+    login: null,
+    email: null,
     isAuth: false
 }
 
@@ -36,4 +36,20 @@ export const authReducer = (state: AuthReducerPropsType = initialState, action: 
     }
 }
 
-export const setAuthUserData = (id: number, login: string, email: string ) => ({type: SET_USER_DATA, data: {id, login, email}} as const)
+export const setAuthUserData = (id: number, login: string, email: string) => ({
+    type: SET_USER_DATA,
+    data: {id, login, email}
+} as const)
+
+
+export const getAuthUserData = () => {
+    return (dispatch: any) => {
+        authAPI.me().then(data => {
+                if (data.resultCode === 0) {
+                    let {id, login, email} = data.data
+                    dispatch(setAuthUserData(id, login, email))
+                }
+            }
+        )
+    }
+}

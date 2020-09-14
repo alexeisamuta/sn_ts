@@ -9,6 +9,7 @@ import DialogsContainer from "./componens/Dialogs/DialogsContainer";
 import UsersContainer from "./componens/Users/UsersContainer";
 import ProfileContainer from "./componens/Profile/ProfileContainer";
 import HeaderContainer from "./componens/Header/HeaderContainer";
+import Login from "./componens/Login/Login";
 
 export type PropsType = {
     // store: any
@@ -21,7 +22,7 @@ const App: React.FC<PropsType> = (props) => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
-                <HeaderContainer/>
+                <HeaderContainer />
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs' render={() => <DialogsContainer/>}/>
@@ -29,7 +30,8 @@ const App: React.FC<PropsType> = (props) => {
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
                     <Route path='/users' render={() => <UsersContainer />}/>
-                    <Route path='/settings' component={Settings}/>
+                    <Route path='/settings' render={() => <Settings />}/>
+                    <Route path='/login' render={() => <Login />}/>
 
                 </div>
             </div>

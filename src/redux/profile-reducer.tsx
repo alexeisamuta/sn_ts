@@ -2,6 +2,8 @@ import React from "react";
 import {postsType, profilePageType} from "./store";
 import {UsersProfileType} from "../componens/Profile/ProfileContainer";
 import {sendMessageAC, updateNewMessageBodyAC} from "./dialogs-reducer";
+import {usersAPI} from "../api/api";
+import {toggleFollowingProgress, unfollowSuccess} from "./users-reducer";
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT'
@@ -44,7 +46,8 @@ export const profileReducer = (state: profilePageType = initialState, action: Ac
         case SET_USER_PROFILE:
             return {
                 ...state,
-                profile: action.profile}
+                profile: action.profile
+            }
 
         default:
             return state
@@ -54,3 +57,13 @@ export const profileReducer = (state: profilePageType = initialState, action: Ac
 export const addPostAC = () => ({type: ADD_POST} as const)
 export const setUsersProfile = (profile: UsersProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 export const updatePostTextAC = (text: string) => ({type: UPDATE_POST_TEXT, newText: text} as const)
+
+
+export const getUserProfile = (userId: string) => {
+
+    return (dispatch: any) => {
+        usersAPI.getProfile(userId).then(data => {
+            dispatch(setUsersProfile(data))
+        })
+    }
+}

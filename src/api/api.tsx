@@ -13,16 +13,22 @@ export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data);
     },
-    authMe() {
-        return instance.get(`auth/me`).then(response => response.data);
-    },
     follow (id: number) {
         return instance.post(`follow/${id}`).then(response => response.data);
     },
     unFollow (id: number) {
         return instance.delete(`follow/${id}`).then(response => response.data);
+    },
+    getProfile (id: string) {
+        return instance.get(`profile/${id}`).then(response => response.data);
     }
 
+}
+
+export const authAPI = {
+    me() {
+        return instance.get(`auth/me`).then(response => response.data);
+    }
 }
 
 
