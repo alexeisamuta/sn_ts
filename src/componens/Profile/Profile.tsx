@@ -7,6 +7,8 @@ import {UsersProfileType} from "./ProfileContainer";
 
 type ProfileContainerType = {
     profile: UsersProfileType
+    status: string
+    updateStatus:(status: string) => void
     //setUsersProfile: (profile: UsersProfileType) => void
 }
 
@@ -16,7 +18,7 @@ type ProfileType = {
 function Profile(props: ProfileContainerType) {
     return (
         <div>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
             <MyPostsContainer />
         </div>
     );

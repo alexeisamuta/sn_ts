@@ -2,7 +2,7 @@ import React, {ComponentClass} from 'react';
 import Profile from "./Profile";
 import * as axios from "axios";
 import {connect} from "react-redux";
-import {getUserProfile} from "../../redux/profile-reducer";
+import {getStatus, getUserProfile, updateStatus} from "../../redux/profile-reducer";
 import {Redirect, withRouter} from "react-router-dom"
 import {RouteComponentProps} from "react-router";
 import {compose} from "redux";
@@ -49,6 +49,7 @@ export type UsersProfileType = {
 
 type mapStateToPropsType = {
     profile: UsersProfileType
+    status: string
 }
 
 export type mapStateToPropsForRedirectType = {
@@ -58,6 +59,8 @@ export type mapStateToPropsForRedirectType = {
 type mapDispatchTopPropsType = {
     //setUsersProfile: (profile: UsersProfileType) => void
     getUserProfile: (userId: string) => void
+    getStatus: (userId: string) => void
+    updateStatus:(status: string) => void
 }
 
 type PathParamsType = {
@@ -72,15 +75,19 @@ class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = "2";
+            userId = "10940";
         }
         this.props.getUserProfile(userId)
-
+        this.props.getStatus(userId)
     }
 
     render() {
         return (
-            <Profile {...this.props} profile={this.props.profile}/>
+            <Profile {...this.props}
+                     profile={this.props.profile}
+                     status={this.props.status}
+                     updateStatus={this.props.updateStatus}
+            />
         );
     }
 };
@@ -90,6 +97,7 @@ class ProfileContainer extends React.Component<PropsType> {
 
 let mapStateToProps = (state: any): mapStateToPropsType => ({
     profile: state.profilePage.profile,
+    status: state.profilePage.status
 })
 // connect(mapStateToProps, {getUserProfile})
 // withRouter,
@@ -97,7 +105,7 @@ let mapStateToProps = (state: any): mapStateToPropsType => ({
 export default compose(
     withAuthRedirect,
     withRouter,
-    connect(mapStateToProps, {getUserProfile}))(ProfileContainer);
+    connect(mapStateToProps, {getUserProfile , getStatus, updateStatus}))(ProfileContainer);
 
 
 // connect(mapStateToProps, {getUserProfile})(withUrlDataContainerComponent);
