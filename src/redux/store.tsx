@@ -1,5 +1,5 @@
-import {addPostAC, profileReducer, updatePostTextAC} from "./profile-reducer";
-import {dialogsReducer, sendMessageAC, updateNewMessageBodyAC} from "./dialogs-reducer";
+import {addPostAC, profileReducer} from "./profile-reducer";
+import {dialogsReducer, sendMessageAC} from "./dialogs-reducer";
 
 
 export type messagesType = {
@@ -16,11 +16,9 @@ export type postsType = {
 export type dialogsPageType = {
     messages: Array<messagesType>
     dialogs: Array<dialogsType>
-    newMessageBody: string
 }
 export type profilePageType = {
     posts: Array<postsType>
-    newPostText: string
 }
 export type RootStateType = {
     dialogsPage: dialogsPageType
@@ -37,8 +35,6 @@ export type StoreType = {
 
 
 export type ActionsTypes = ReturnType<typeof addPostAC>
-    | ReturnType<typeof updatePostTextAC>
-    | ReturnType<typeof updateNewMessageBodyAC>
     | ReturnType<typeof sendMessageAC>
 
 
@@ -58,14 +54,12 @@ export const store: StoreType = {
             {id: 4, name: 'Masha'},
             {id: 5, name: 'Sulim'},
         ],
-        newMessageBody: ""
     },
     profilePage: {
         posts:[
             {message: 'Hi, how are you?', likesCount: 123},
             {message: "It's my first post", likesCount: 23},
         ],
-        newPostText: "",
     }
 },
     _callSubscriber(){

@@ -3,7 +3,7 @@ import s from "./Dialogs.module.css"
 import DialogsItem from "./DialogsItem/DialogsItems";
 import Message from "./Message/Message";
 import {ActionsTypes, dialogsPageType} from "../../redux/store";
-import {sendMessageAC, updateNewMessageBodyAC} from "../../redux/dialogs-reducer";
+import {sendMessageAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
@@ -18,11 +18,8 @@ let mapStateToProps = (state: any) => {
 
 let mapDispatchToProps = (dispatch: any) => {
     return {
-        onNewMessageChange: (body: any) => {
-            dispatch(updateNewMessageBodyAC(body))
-        },
-        onSendMessageClick: () => {
-            dispatch(sendMessageAC())
+        onSendMessageClick: (newMessageBody: string) => {
+            dispatch(sendMessageAC(newMessageBody))
         }
     }
 }
