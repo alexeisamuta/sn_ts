@@ -50,6 +50,8 @@ export type UsersProfileType = {
 type mapStateToPropsType = {
     profile: UsersProfileType
     status: string
+    authorizedUserId: number
+    isAuth: boolean
 }
 
 export type mapStateToPropsForRedirectType = {
@@ -58,8 +60,8 @@ export type mapStateToPropsForRedirectType = {
 
 type mapDispatchTopPropsType = {
     //setUsersProfile: (profile: UsersProfileType) => void
-    getUserProfile: (userId: string) => void
-    getStatus: (userId: string) => void
+    getUserProfile: (userId: number) => void
+    getStatus: (userId: number) => void
     updateStatus:(status: string) => void
 }
 
@@ -73,9 +75,9 @@ type PropsType = mapStateToPropsType & mapDispatchTopPropsType & RouteComponentP
 class ProfileContainer extends React.Component<PropsType> {
 
     componentDidMount() {
-        let userId = this.props.match.params.userId
+        let userId = +this.props.match.params.userId
         if (!userId) {
-            userId = "10940";
+            userId = this.props.authorizedUserId;
         }
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
@@ -97,7 +99,9 @@ class ProfileContainer extends React.Component<PropsType> {
 
 let mapStateToProps = (state: any): mapStateToPropsType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    authorizedUserId: state.auth.id,
+    isAuth: state.auth.isAuth
 })
 // connect(mapStateToProps, {getUserProfile})
 // withRouter,

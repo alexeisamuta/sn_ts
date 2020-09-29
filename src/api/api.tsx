@@ -23,10 +23,10 @@ export const usersAPI = {
 }
 
 export const profileAPI = {
-    getProfile(id: string) {
+    getProfile(id: number) {
         return instance.get(`profile/${id}`).then(response => response.data);
     },
-    getStatus(id: string) {
+    getStatus(id: number) {
         return instance.get(`profile/status/${id}`).then(response => response.data);
     },
     updateStatus(status: string) {
