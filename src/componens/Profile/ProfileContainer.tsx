@@ -96,7 +96,7 @@ class ProfileContainer extends React.Component<PropsType> {
         );
     }
 };
-// let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
+
 //
 // let withUrlDataContainerComponent = withRouter(AuthRedirectComponent)
 
