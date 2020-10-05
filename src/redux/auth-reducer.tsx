@@ -1,6 +1,7 @@
 import React from "react";
 import {authAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {Dispatch} from "redux";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 
@@ -44,7 +45,7 @@ export const setAuthUserData = (id: number | null, login: string | null, email: 
 
 export const getAuthUserData = () => {
     return (dispatch: any) => {
-        authAPI.me().then(data => {
+        return authAPI.me().then(data => {
                 if (data.resultCode === 0) {
                     let {id, login, email} = data.data
                     dispatch(setAuthUserData(id, login, email, true))
