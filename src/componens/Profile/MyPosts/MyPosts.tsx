@@ -17,14 +17,14 @@ type MyPostType = {
 }
 
 
-function MyPosts(props: MyPostType) {
+const MyPosts = React.memo((props: MyPostType) => {
 
     let postsElements = props.posts.map(props => <Post message={props.message} likesCount={props.likesCount}/>)
 
-    let refElement = React.createRef<HTMLTextAreaElement>();
+    // let refElement = React.createRef<HTMLTextAreaElement>();
 
 
-    function addPost(values: any) {
+    const addPost = (values: any) => {
         props.addPost(values.newPostText)
 
     }
@@ -39,7 +39,7 @@ function MyPosts(props: MyPostType) {
         </div>
 
     );
-};
+});
 
 const AddNewPostForm = (props: any) => {
     return (
