@@ -1,7 +1,6 @@
 import React from "react";
 import {authAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
-import {Dispatch} from "redux";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 
@@ -44,14 +43,13 @@ export const setAuthUserData = (id: number | null, login: string | null, email: 
 
 
 export const getAuthUserData = () => {
-    return (dispatch: any) => {
-        return authAPI.me().then(data => {
-                if (data.resultCode === 0) {
-                    let {id, login, email} = data.data
-                    dispatch(setAuthUserData(id, login, email, true))
-                }
-            }
-        )
+    return async (dispatch: any) => {
+        let data = await authAPI.me();
+        if (data.resultCode === 0) {
+            let {id, login, email} = data.data
+            dispatch(setAuthUserData(id, login, email, true))
+        }
+
     }
 }
 export const login = (email: string, password: string, rememberMe: boolean) => {
@@ -60,7 +58,7 @@ export const login = (email: string, password: string, rememberMe: boolean) => {
                 if (data.resultCode === 0) {
                     dispatch(getAuthUserData())
                 } else {
-                    let message =  data.messages.length > 0 ? data.messages[0] : "Some error"
+                    let message = data.messages.length > 0 ? data.messages[0] : "Some error"
                     dispatch(stopSubmit("login", {_error: message}))
                 }
             }
