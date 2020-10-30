@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import './App.css';
 import Navbar from "./componens/Navbar/Navbar";
-import {BrowserRouter, Route} from 'react-router-dom'
+import {HashRouter, Route} from 'react-router-dom'
 import Music from "./componens/Music/Music";
 import News from "./componens/News/News";
 import Settings from "./componens/Settings/Settings";
@@ -36,7 +36,7 @@ class App extends React.Component<any> {
             return <Preloader/>
         }
         return (
-            <BrowserRouter>
+            <HashRouter>
                 <div className='app-wrapper'>
                     <HeaderContainer/>
                     <Navbar/>
@@ -54,7 +54,7 @@ class App extends React.Component<any> {
                         <Route path='/login' render={() => <Login/>}/>
                     </div>
                 </div>
-            </BrowserRouter>
+            </HashRouter>
         );
     }
 }
