@@ -31,8 +31,8 @@ export const User = ({user, followingInProgress, unfollow, follow}: userTypeFunc
                         : <button disabled={followingInProgress.some(id => id === user.id)}
                                   onClick={() => {
                                       follow(user.id)
-                                  }
-                                  }>Follow</button>}
+                                  }}
+                        >Follow</button>}
                 </div>
             </span>
             <span>
