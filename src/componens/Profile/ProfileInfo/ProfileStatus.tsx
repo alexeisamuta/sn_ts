@@ -1,5 +1,4 @@
 import React, {ChangeEvent} from 'react';
-import s from './ProfileInfo.module.css'
 
 type ProfileStatusType = {
     status: string
@@ -44,7 +43,7 @@ class ProfileStatus extends React.Component <ProfileStatusType> {
             <div>
                 {!this.state.editMode
                     ? <div>
-                        <span onDoubleClick={this.activateEditMode.bind(this)}>{this.props.status || "------"}</span>
+                        <b>Status</b>: <span onDoubleClick={this.activateEditMode.bind(this)}>{this.props.status || "------"}</span>
                     </div>
                     : <div>
                         <input autoFocus={true}
@@ -57,6 +56,5 @@ class ProfileStatus extends React.Component <ProfileStatusType> {
         );
     }
 }
-;
 
 export default ProfileStatus;

@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import './App.css';
 import Navbar from "./componens/Navbar/Navbar";
-import {HashRouter, Route} from 'react-router-dom'
+import {HashRouter, Route, Redirect} from 'react-router-dom'
 import Music from "./componens/Music/Music";
 import News from "./componens/News/News";
 import Settings from "./componens/Settings/Settings";
@@ -26,8 +26,17 @@ export type PropsType = {
 
 class App extends React.Component<any> {
 
+    catchAllErrors = (promiseRejectionEvent: any) => {
+        alert("Some error accured")
+        console.log(promiseRejectionEvent)
+    }
+
     componentDidMount() {
         this.props.initializeApp()
+        window.addEventListener("unhandledrejection", this.catchAllErrors)
+    }
+    componentWillUnmount() {
+        window.addEventListener("unhandledrejection", this.catchAllErrors)
     }
 
 
@@ -46,6 +55,7 @@ class App extends React.Component<any> {
                             <DialogsContainer/>
                            </Suspense>
                         }}/>
+                        <Route exact path='/' render={() => <Redirect to={"/profile"}/>}/>
                         <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                         <Route path='/news' component={News}/>
                         <Route path='/music' component={Music}/>
