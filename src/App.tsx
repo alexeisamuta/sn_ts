@@ -1,78 +1,92 @@
-import React, { Suspense } from 'react';
+import React, {Component} from 'react';
 import './App.css';
-import Navbar from "./componens/Navbar/Navbar";
-import {HashRouter, Route, Redirect} from 'react-router-dom'
-import Music from "./componens/Music/Music";
-import News from "./componens/News/News";
-import Settings from "./componens/Settings/Settings";
+import Navbar from './components/Navbar/Navbar';
+import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
 
-import UsersContainer from "./componens/Users/UsersContainer";
-import ProfileContainer from "./componens/Profile/ProfileContainer";
-import HeaderContainer from "./componens/Header/HeaderContainer";
-import Login from "./componens/Login/Login";
-import {connect} from "react-redux";
-import {initializeApp} from "./redux/app-reducer";
-import {Preloader} from "./componens/common/Preloader/Preloader";
+import HeaderContainer from "./components/Header/HeaderContainer";
+import {LoginPage} from "./components/Login/LoginPage";
+import {connect, Provider} from "react-redux";
 import {compose} from "redux";
+import {initializeApp} from "./redux/app-reducer";
+import Preloader from "./components/common/Preloader/Preloader";
+import store, {AppStateType} from "./redux/redux-store";
+import {withSuspense} from "./hoc/withSuspense";
+import { UsersPage } from './components/Users/UsersContainer';
 
-// import DialogsContainer from "./componens/Dialogs/DialogsContainer";
-const DialogsContainer = React.lazy(() => import("./componens/Dialogs/DialogsContainer"));
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 
-
-export type PropsType = {
-    initialized: boolean
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = {
     initializeApp: () => void
 }
 
-class App extends React.Component<any> {
+const SuspendedDialogs = withSuspense(DialogsContainer);
+const SuspendedProfile = withSuspense(ProfileContainer);
 
-    catchAllErrors = (promiseRejectionEvent: any) => {
-        alert("Some error accured")
-        console.log(promiseRejectionEvent)
+
+class App extends Component<MapPropsType & DispatchPropsType> {
+    catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
+        alert("Some error occured");
     }
-
     componentDidMount() {
-        this.props.initializeApp()
-        window.addEventListener("unhandledrejection", this.catchAllErrors)
+        this.props.initializeApp();
+        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     }
     componentWillUnmount() {
-        window.addEventListener("unhandledrejection", this.catchAllErrors)
+        window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     }
-
 
     render() {
         if (!this.props.initialized) {
             return <Preloader/>
         }
+
         return (
-            <HashRouter>
-                <div className='app-wrapper'>
-                    <HeaderContainer/>
-                    <Navbar/>
-                    <div className='app-wrapper-content'>
-                        <Route path='/dialogs' render={() => {
-                           return <Suspense fallback={<div>Загрузка...</div>}>
-                            <DialogsContainer/>
-                           </Suspense>
-                        }}/>
-                        <Route exact path='/' render={() => <Redirect to={"/profile"}/>}/>
-                        <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-                        <Route path='/news' component={News}/>
-                        <Route path='/music' component={Music}/>
-                        <Route path='/users' render={() => <UsersContainer/>}/>
-                        <Route path='/settings' render={() => <Settings/>}/>
-                        <Route path='/login' render={() => <Login/>}/>
-                    </div>
+            <div className='app-wrapper'>
+                <HeaderContainer/>
+                <Navbar/>
+                <div className='app-wrapper-content'>
+                    <Switch>
+                        <Route exact path='/'
+                               render={() => <Redirect to={"/profile"}/>}/>
+
+                        <Route path='/dialogs'
+                               render={() => <SuspendedDialogs /> }/>
+
+                        <Route path='/profile/:userId?'
+                               render={() => <SuspendedProfile /> }/>
+
+                        <Route path='/users'
+                               render={() => <UsersPage pageTitle={"Самураи"}/>}/>
+
+                        <Route path='/login'
+                               render={() => <LoginPage/>}/>
+
+                        <Route path='*'
+                               render={() => <div>404 NOT FOUND</div>}/>
+                    </Switch>
+
                 </div>
-            </HashRouter>
-        );
+            </div>
+        )
     }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: AppStateType) => ({
     initialized: state.app.initialized
 })
 
-export default compose(
-    // withRouter,
+let AppContainer = compose<React.ComponentType>(
+    withRouter,
     connect(mapStateToProps, {initializeApp}))(App);
+
+const SamuraiJSApp: React.FC = () => {
+    return <BrowserRouter>
+        <Provider store={store}>
+            <AppContainer/>
+        </Provider>
+    </BrowserRouter>
+}
+
+export default SamuraiJSApp;
